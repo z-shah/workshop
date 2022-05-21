@@ -1,0 +1,7 @@
+project_id        = ""
+region            = ""
+zones             = ["XXX", "YYY", "ZZZ"]
+network           = ""
+subnetwork        = ""
+ip_range_pods     = ""
+ip_range_services = ""
