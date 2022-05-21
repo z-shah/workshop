@@ -1,0 +1,18 @@
+apiVersion: skaffold/v2beta4
+kind: Config
+metadata:
+  name: hello-app
+build:
+  artifacts:
+  - image: hello-app
+    docker:
+      cacheFrom:
+      # Local Docker builder replaces cache references to the artifact image with
+      # the tagged image reference, useful for caching from the previous build.
+      - australia-southeast1-docker.pkg.dev/gke-demo-347012/demo/hello-app
+  local: {}
+
+deploy:
+  kubectl:
+    manifests: 
+    - manifests/helloweb-deployment.yaml

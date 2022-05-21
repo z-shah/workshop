@@ -1,0 +1,28 @@
+steps:
+
+# Build microservices-demo images using skaffold.
+- name: gcr.io/k8s-skaffold/skaffold:latest
+  args:
+    - skaffold
+    - build
+    - '--build-concurrency=0'
+    - '--interactive=false'
+    - '--default-repo=australia-southeast1-docker.pkg.dev/gke-demo-347012/demo'
+    - '--file-output=/workspace/artifacts.json'
+
+# Create release in Google Cloud Deploy
+
+- name: gcr.io/google.com/cloudsdktool/cloud-sdk:latest
+  entrypoint: gcloud
+  args:
+    [
+      "deploy", "releases", "create", "rel-${SHORT_SHA}",
+      "--delivery-pipeline", "microservices-demo",
+      "--region", "us-central1",
+      "--annotations", "commitId=${REVISION_ID}",
+      "--build-artifacts", "/workspace/artifacts.json"
+    ]
+options:
+ logging: CLOUD_LOGGING_ONLY
+
+timeout: 3600s

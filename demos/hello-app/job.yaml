@@ -1,0 +1,13 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: hello
+spec:
+  template:
+    spec:
+      containers:
+      - name: hello
+        image: australia-southeast1-docker.pkg.dev/gke-demo-347012/demo/hello-app:latest
+      serviceAccountName: "hello-svc"  
+      restartPolicy: Never
+  backoffLimit: 4

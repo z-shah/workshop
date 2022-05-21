@@ -1,0 +1,15 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sAllowedRepos
+metadata:
+  name: repo-is-project-artifactregistry
+spec:
+  match:
+    kinds:
+    - apiGroups: [""]
+      kinds:  ["Pod"]
+    namespaces:
+    - default
+  parameters:
+    repos:
+    - "australia-southeast1-docker.pkg.dev/gke-demo-347012/"
+    - "redis:alpine"
